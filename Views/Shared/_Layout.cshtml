@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>_Layout</title>
+
+    @System.Web.Optimization.Styles.Render("~/bundles/css")
+
+
+</head>
+<body>
+    @Html.Partial("_Navbar")
+    <div class="container">
+        @* sağdan soldan ortalı olsun diye dive container verdik *@
+        @RenderBody()
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/bundles/scripts")
+    @RenderSection("script", false)
+</body>
+</html>

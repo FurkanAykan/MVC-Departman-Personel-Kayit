@@ -1,0 +1,61 @@
+﻿@model Personel_MVC_SQL.ViewModels.PersonelFormViewModel
+@* burada view model de oluşturduğumuz classı çağırdık ki hep personel hem departmanı kullanabilelim *@
+@{
+    ViewBag.Title = "PersonelForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Personel Formu</h2>
+<!--@Html.ValidationSummary()--> @*bu bütün hatalrı en üste yazıdırdı.*@
+@using (Html.BeginForm("Kaydet", "Personel", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Personel.Ad)
+        @Html.TextBoxFor(m => m.Personel.Ad, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Personel.Ad)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Personel.Soyad)
+        @Html.TextBoxFor(m => m.Personel.Soyad, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Personel.Soyad)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Personel.Departman)
+        @Html.DropDownListFor(m => m.Personel.DepartmanId, new SelectList(Model.Departmanlar, "Id", "Ad"), "Departman Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Personel.DepartmanId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Personel.Maas)
+        @Html.TextBoxFor(m => m.Personel.Maas, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Personel.Maas)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Personel.DogumTarihi)
+        @Html.TextBoxFor(m => m.Personel.DogumTarihi, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date",onchange= "CheckDateTypeIsValid(this)" })
+        @Html.ValidationMessageFor(m => m.Personel.DogumTarihi)
+    </div>
+    <div class="radio">
+        <label>
+            @Html.RadioButtonFor(m => m.Personel.Cinsiyet, true) Erkek
+        </label>
+        <label>
+            @Html.RadioButtonFor(m => m.Personel.Cinsiyet, false) Kadın
+        </label>
+        @Html.ValidationMessageFor(m => m.Personel.Cinsiyet)
+    </div>
+    <div class="radio">
+        <label>
+            @Html.RadioButtonFor(m => m.Personel.EvliMi, true) Evli
+        </label>
+        <label>
+            @Html.RadioButtonFor(m => m.Personel.EvliMi, false) Bekar
+        </label>
+    </div>
+    @Html.HiddenFor(m => m.Personel.Id)
+    <button type="submit" class="btn btn-success">Kaydet</button>
+}
+@section script{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
